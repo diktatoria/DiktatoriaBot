@@ -22,7 +22,7 @@ public class Constants {
 
     //CHANNELS
     public static final long CONSOLE = 773246268364816394L;
-
+    public static final long RULES = 772829227451809802L;
     public static final EmbedBuilder ERROR_EMBED = new EmbedBuilder()
             .setFooter("Mit " + EmojiParser.parseToUnicode(":heart:") + " entwickelt.")
             .setTitle("Fehler")

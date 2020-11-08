@@ -1,9 +1,6 @@
 package io.github.diktatoria.bot;
 
-import io.github.diktatoria.bot.listeners.ArrestListener;
-import io.github.diktatoria.bot.listeners.ConsoleListener;
-import io.github.diktatoria.bot.listeners.RuleAcceptListener;
-import io.github.diktatoria.bot.listeners.ShutdownListener;
+import io.github.diktatoria.bot.listeners.*;
 import org.javacord.api.AccountType;
 import org.javacord.api.DiscordApi;
 import org.javacord.api.DiscordApiBuilder;
@@ -28,13 +25,14 @@ public class DiktatoriaBot {
     }
 
     public static void main(String[] args) {
-        if (args.length != 2) return;
-        DiktatoriaBot bot = new DiktatoriaBot(args[0]);
+        if(System.getenv("BOT_TOKEN") == null) return;
+        DiktatoriaBot bot = new DiktatoriaBot(System.getenv("BOT_TOKEN"));
     }
 
     public static void start(DiscordApi api){
-        api.getTextChannelById(762644745511239693L).get().addMessageCreateListener(new RuleAcceptListener());
+        api.getTextChannelById(Constants.RULES).get().addMessageCreateListener(new RuleAcceptListener());
         api.getServerById(Constants.SERVER).get().addMessageCreateListener(new ArrestListener());
+        api.getServerById(Constants.SERVER).get().addMessageCreateListener(new ReleaseListener());
         TextChannel console = api.getTextChannelById(773246268364816394L).get();
         console.addMessageCreateListener(new ConsoleListener(api, api.getServerById(Constants.SERVER).get()));
         console.addMessageCreateListener(new ShutdownListener());
