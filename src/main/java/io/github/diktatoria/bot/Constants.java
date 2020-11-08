@@ -13,7 +13,8 @@ public class Constants {
     public static final long ORGA = 762646703978577942L;
     public static final long BOT_CONTROL = 773612171891441666L;
     public static final long DIKTATOR = 762646433744158731L;
-    public static final long ARRESTED = 773623127640899655L;
+    public static final long ARRESTED_FROM_DIKTATOR = 773623127640899655L;
+    public static final long ARRESTED_FROM_REBEL_L = 774880241063559178L;
     public static final long REBELL_LEADER = 762647132192374804L;
 
     //SERVERS
@@ -21,10 +22,6 @@ public class Constants {
 
     //CHANNELS
     public static final long CONSOLE = 773246268364816394L;
-
-    //REACTIONS
-    public static final long ARREST = 773608489649831937L;
-    public static final long SETFREE = 773622690078654464L;
 
     public static final EmbedBuilder ERROR_EMBED = new EmbedBuilder()
             .setFooter("Mit " + EmojiParser.parseToUnicode(":heart:") + " entwickelt.")

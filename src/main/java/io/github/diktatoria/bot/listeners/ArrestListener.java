@@ -31,6 +31,11 @@ public class ArrestListener implements MessageCreateListener {
                     return;
                 }
                 User mentioned = mentions.get(0);
+                if(Utils.hasOneRole(mentioned, new long[]{Constants.ARRESTED_FROM_DIKTATOR, Constants.ARRESTED_FROM_REBEL_L}, event.getServer().get())){
+                    event.getChannel().sendMessage(Constants.ERROR_EMBED
+                    .setDescription(user.getMentionTag() + ", " + mentioned.getDisplayName(event.getServer().get()) + " ist bereits Opfer der Konflikte zwischen den Rebellen und dem Diktator geworden, er langweilt sich schon genug. Du kannst ihn zurzeit nicht gefangen nehmen!"));
+                    return;
+                }
                 if(mentioned.isBot()){
                     event.getChannel().sendMessage(Constants.ERROR_EMBED
                     .setDescription(user.getMentionTag() + ", Bots sind unantastbar!"));
@@ -38,7 +43,8 @@ public class ArrestListener implements MessageCreateListener {
                 }
                 if(Utils.hasRole(mentioned, Constants.REBELL_LEADER, event.getServer().get()) || Utils.hasRole(mentioned, Constants.DIKTATOR, event.getServer().get())){
                     event.getChannel().sendMessage(Constants.ERROR_EMBED
-                    .setDescription(user.getMentionTag() + ", dachtest du wirklich, dass es so leicht gänge? Einfach deinen Gegenspieler festnehmen zu lassen?"));
+                    .setDescription(user.getMentionTag() + ", dachtest du wirklich, dass es so leicht ginge? Einfach deinen Gegenspieler festnehmen zu lassen?"));
+                    return;
                 }
                 if (mentioned.getId() == user.getId()) {
                     EmbedBuilder builder = Constants.ERROR_EMBED;
@@ -49,15 +55,18 @@ public class ArrestListener implements MessageCreateListener {
                     event.getChannel().sendMessage(builder);
                     return;
                 }
-                mentioned.addRole(event.getApi().getRoleById(Constants.ARRESTED).get());
+                if(Utils.hasRole(user, Constants.DIKTATOR, event.getServer().get()))
+                    mentioned.addRole(event.getApi().getRoleById(Constants.ARRESTED_FROM_DIKTATOR).get());
+                else
+                    mentioned.addRole(event.getApi().getRoleById(Constants.ARRESTED_FROM_REBEL_L).get());
                 EmbedBuilder builder = Constants.SUCESS_EMBED;
                 if (Utils.hasRole(user, Constants.DIKTATOR, event.getServer().get()))
                     builder
-                            .setTitle(mentioned.getDisplayName(event.getServer().get()) + " ist von " + user.getDisplayName(event.getServer().get()) + ", dem Großen Diktator einsperren gelassen worden.")
+                            .setTitle(mentioned.getDisplayName(event.getServer().get()) + " ist von " + user.getDisplayName(event.getServer().get()) + ", dem Großen Diktator einsperren lassen worden.")
                             .setDescription(mentioned.getMentionTag() + ", das Imperium wünscht dir einen schönen, bequemen Aufenthalt im Knast. Viel Spaß!");
                 else
                     builder
-                        .setTitle(mentioned.getDisplayName(event.getServer().get()) + " wurde von " + user.getDisplayName(event.getServer().get()) + ", dem Rebellenanführer verschleppen gelassen worden.")
+                        .setTitle(mentioned.getDisplayName(event.getServer().get()) + " wurde von " + user.getDisplayName(event.getServer().get()) + ", dem Rebellenanführer verschleppen lassen worden.")
                         .setDescription(mentioned.getMentionTag() + ", die Rebellen wünschen dir einen schönen, bequemen Aufenthalt in dem modrigen Keller, in dem du eingesperrt worden bist. Viel Spaß!")
                 ;
                 event.getChannel().sendMessage(builder);
