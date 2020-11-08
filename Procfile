@@ -1,1 +1,1 @@
-worker: java -jar target/DiktatoriaBot-1.0-SNAPSHOT.jar
+worker: java -jar target/Bot.jar
