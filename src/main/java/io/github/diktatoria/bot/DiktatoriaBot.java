@@ -30,6 +30,7 @@ public class DiktatoriaBot {
     }
 
     public static void start(DiscordApi api){
+
         api.getTextChannelById(Constants.RULES).get().addMessageCreateListener(new RuleAcceptListener());
         api.getServerById(Constants.SERVER).get().addMessageCreateListener(new ArrestListener());
         api.getServerById(Constants.SERVER).get().addMessageCreateListener(new ReleaseListener());

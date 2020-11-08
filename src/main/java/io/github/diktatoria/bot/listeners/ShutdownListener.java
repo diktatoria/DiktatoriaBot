@@ -20,20 +20,28 @@ public class ShutdownListener implements MessageCreateListener {
                 if (Utils.hasRole(user, Constants.BOT_CONTROL, event.getServer().get())) {
                     event.getChannel().sendMessage(Constants.SUCESS_EMBED
                             .setTitle("Bot wird beendet")
-                            .setDescription("Dieser Bot wurde von " + user.getMentionTag() + "beendet.")).thenAccept(t -> {
+                            .setDescription("Dieser Bot wurde von " + user.getMentionTag() + "beendet.")).thenAccept(message -> {
                         scheduler.schedule(() -> {
-                            t.delete();
-                            event.getApi().disconnect();
-                            System.exit(-1);
+                            message.delete().thenAccept((empty) -> {
+                                event.getMessage().delete().thenAccept((emptie) -> {
+                                    event.getApi().disconnect();
+                                    System.out.println("Bot wurde von " + user.getDiscriminatedName() + " gestoppt.");
+                                    System.exit(-1);
+                                });
 
-                        }, 5L, TimeUnit.SECONDS);
+                            });
+
+                        }, 30L, TimeUnit.SECONDS);
                     });
-                    System.out.println("Bot wurde von " + user.getDiscriminatedName() + " gestoppt.");
+
                 } else {
-                    event.getChannel().sendMessage(Constants.noPerms(user));
+                    event.getChannel().sendMessage(Constants.noPerms(user)).thenAccept(message -> {
+                        scheduler.schedule(() -> {
+                            message.delete();
+                        }, 30L, TimeUnit.SECONDS);
+                    });
                 }
             });
-            scheduler.schedule(()->event.getMessage().delete(), 30, TimeUnit.SECONDS);
 
         }
     }
