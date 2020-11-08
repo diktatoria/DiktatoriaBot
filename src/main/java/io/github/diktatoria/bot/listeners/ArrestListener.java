@@ -82,6 +82,7 @@ public class ArrestListener implements MessageCreateListener {
                             .setTitle(mentioned.getDisplayName(event.getServer().get()) + " wurde von " + user.getDisplayName(event.getServer().get()) + ", dem Rebellenanführer verschleppen lassen worden.")
                             .setDescription(mentioned.getMentionTag() + ", die Rebellen wünschen dir einen schönen, bequemen Aufenthalt in dem modrigen Keller, in dem du eingesperrt worden bist. Viel Spaß!")
                             ;
+                mentioned.getPrivateChannel().ifPresent((channel) -> channel.sendMessage(builder));
                 event.getChannel().sendMessage(builder);
             });
             scheduler.schedule(() -> event.getMessage().delete(), 30L, TimeUnit.SECONDS);
