@@ -59,10 +59,17 @@ public class ReleaseListener implements MessageCreateListener {
                     return;
                 }
 
-                if (Utils.hasRole(mentioned, Constants.ARRESTED_FROM_DIKTATOR, event.getServer().get()))
-                    mentioned.removeRole(event.getApi().getRoleById(Constants.ARRESTED_FROM_DIKTATOR).get());
-                else
-                    mentioned.addRole(event.getApi().getRoleById(Constants.ARRESTED_FROM_REBEL_L).get());
+                if (Utils.hasRole(mentioned, Constants.ARRESTED_FROM_DIKTATOR, event.getServer().get())) {
+                    System.out.println(true);
+                    mentioned.removeRole(event.getServer().get().getRoleById(Constants.ARRESTED_FROM_DIKTATOR).get());
+                }
+                else {
+                    //println(event.getServer().get().getRoleById(Constants.ARRESTED_FROM_REBEL_L).get().getUsers());
+                    event.getServer().get().getRoleById(Constants.ARRESTED_FROM_REBEL_L).get().removeUser(user).thenAccept((voit)->{
+                        println(event.getServer().get().getRoleById(Constants.ARRESTED_FROM_REBEL_L).get().getUsers());
+                    });
+                    mentioned.removeRole(event.getServer().get().getRoleById(Constants.ARRESTED_FROM_REBEL_L).get());
+                }
                 EmbedBuilder builder = Constants.SUCESS_EMBED;
                 if (Utils.hasRole(user, Constants.DIKTATOR, event.getServer().get()))
                     builder

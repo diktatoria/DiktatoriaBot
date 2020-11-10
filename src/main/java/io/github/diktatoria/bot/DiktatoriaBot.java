@@ -5,7 +5,6 @@ import org.javacord.api.AccountType;
 import org.javacord.api.DiscordApi;
 import org.javacord.api.DiscordApiBuilder;
 import org.javacord.api.entity.channel.TextChannel;
-import org.omg.SendingContext.RunTime;
 
 public class DiktatoriaBot {
     public DiscordApi api;
@@ -32,7 +31,7 @@ public class DiktatoriaBot {
     public static void start(DiscordApi api){
 
         api.getTextChannelById(Constants.RULES).get().addMessageCreateListener(new RuleAcceptListener());
-        api.getServerById(Constants.SERVER).get().addMessageCreateListener(new ArrestListener());
+        api.getServerById(Constants.SERVER).get().addMessageCreateListener(new AbductListener());
         api.getServerById(Constants.SERVER).get().addMessageCreateListener(new ReleaseListener());
         TextChannel console = api.getTextChannelById(773246268364816394L).get();
         console.addMessageCreateListener(new ConsoleListener(api, api.getServerById(Constants.SERVER).get()));
