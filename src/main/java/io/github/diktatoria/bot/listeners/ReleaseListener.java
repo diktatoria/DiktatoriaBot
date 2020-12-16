@@ -6,6 +6,7 @@ import org.javacord.api.entity.message.embed.EmbedBuilder;
 import org.javacord.api.entity.user.User;
 import org.javacord.api.event.message.MessageCreateEvent;
 import org.javacord.api.listener.message.MessageCreateListener;
+import org.javacord.api.util.logging.ExceptionLogger;
 
 import java.util.List;
 import java.util.concurrent.Executors;
@@ -60,14 +61,12 @@ public class ReleaseListener implements MessageCreateListener {
                 }
 
                 if (Utils.hasRole(mentioned, Constants.ARRESTED_FROM_DIKTATOR, event.getServer().get())) {
-                    System.out.println(true);
                     mentioned.removeRole(event.getServer().get().getRoleById(Constants.ARRESTED_FROM_DIKTATOR).get());
                 }
                 else {
-                    //println(event.getServer().get().getRoleById(Constants.ARRESTED_FROM_REBEL_L).get().getUsers());
                     event.getServer().get().getRoleById(Constants.ARRESTED_FROM_REBEL_L).get().removeUser(user).thenAccept((voit)->{
                         println(event.getServer().get().getRoleById(Constants.ARRESTED_FROM_REBEL_L).get().getUsers());
-                    });
+                    }).exceptionally(ExceptionLogger.get());
                     mentioned.removeRole(event.getServer().get().getRoleById(Constants.ARRESTED_FROM_REBEL_L).get());
                 }
                 EmbedBuilder builder = Constants.SUCESS_EMBED;
@@ -83,7 +82,7 @@ public class ReleaseListener implements MessageCreateListener {
                 mentioned.getPrivateChannel().ifPresent((channel) -> channel.sendMessage(builder));
                 event.getChannel().sendMessage(builder);
             });
-            scheduler.schedule(() -> event.getMessage().delete(), 30L, TimeUnit.SECONDS);
+            event.getMessage().delete();
         }
     }
 }

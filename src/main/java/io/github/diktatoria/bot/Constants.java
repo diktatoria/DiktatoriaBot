@@ -33,6 +33,10 @@ public class Constants {
             .setFooter("Mit " + EmojiParser.parseToUnicode(":heart:") + " entwickelt.")
             .setColor(Color.GREEN);
 
+    public static final  EmbedBuilder INFO_EMBED = new EmbedBuilder()
+            .setFooter("Mit " + EmojiParser.parseToUnicode(":heart:") + " entwickelt.")
+            .setColor(Color.YELLOW)
+            .setTitle("Info");
     public static EmbedBuilder noPerms(User user){
         return ERROR_EMBED
                 .setTitle("Keine Berechtigung")
