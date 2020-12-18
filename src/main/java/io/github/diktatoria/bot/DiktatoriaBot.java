@@ -7,6 +7,10 @@ import org.javacord.api.DiscordApiBuilder;
 import org.javacord.api.entity.activity.ActivityType;
 import org.javacord.api.entity.channel.TextChannel;
 import org.javacord.api.entity.user.UserStatus;
+import org.kohsuke.github.GitHub;
+import org.kohsuke.github.GitHubBuilder;
+
+import java.io.IOException;
 
 public class DiktatoriaBot {
     public DiscordApi api;
@@ -22,6 +26,14 @@ public class DiktatoriaBot {
                 .login().join();
         api.updateActivity(ActivityType.WATCHING, "Bereitet Dees Weltherrschaft vor...");
         start(this.api);
+
+        try {
+            GitHub gitHub = new GitHubBuilder().withOAuthToken(System.getenv("GH_TOKEN"), "DiktatoriaBot").build();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
 
     }
