@@ -2,6 +2,7 @@ io\github\diktatoria\bot\listeners\RuleAcceptListener.class
 io\github\diktatoria\bot\Utils$ShutdownHook.class
 io\github\diktatoria\bot\listeners\ReleaseListener.class
 io\github\diktatoria\bot\listeners\ArrestListener.class
+io\github\diktatoria\bot\listeners\AbductListener.class
 io\github\diktatoria\bot\Constants.class
 io\github\diktatoria\bot\DiktatoriaBot.class
 io\github\diktatoria\bot\listeners\ShutdownListener.class

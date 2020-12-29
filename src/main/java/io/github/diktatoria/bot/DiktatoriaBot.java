@@ -19,7 +19,7 @@ public class DiktatoriaBot {
 
     public DiktatoriaBot(String token) {
         this.token = token;
-        this.api = this.api = new DiscordApiBuilder()
+        this.api = new DiscordApiBuilder()
                 .setAccountType(AccountType.BOT)
                 .setAllIntents()
                 .setToken(token)
