@@ -19,7 +19,7 @@ jobs:
       with:
         java-version: 1.8
     - name: Build FatJar
-      run: mvn package assembly:single
+      run: mvn package install
     - uses: actions/upload-artifact@v2
       with:
         name: Jars
